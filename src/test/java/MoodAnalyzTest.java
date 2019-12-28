@@ -132,6 +132,20 @@ public class MoodAnalyzTest {
     }
 
     @Test
-    public void name() {
+    public void givenClassNameImproper_ShouldThrowException() {
+        Constructor<?> constructor= null;
+        try {
+            constructor = Class.forName("MoodAnalyserr").getConstructor(String.class);
+        } catch (NoSuchMethodException e) {
+            throw new MoodAnalysisException(MoodAnalysisException.ExceptionType.NO_SUCH_CLASS,"Please Enter Valid Message");
+        } catch (ClassNotFoundException e) {
+            try{
+            throw new MoodAnalysisException(MoodAnalysisException.ExceptionType.NO_SUCH_CLASS,"Please Enter Valid Message");
+             }
+            catch (MoodAnalysisException ex)
+            {
+                ex.printStackTrace();
+            }
+        }
     }
 }

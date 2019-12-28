@@ -19,7 +19,7 @@ public class MoodAnalyser {
             else
                 return "Happy";
             }
-        catch(NullPointerException e) {
+        catch(NullPointerException e){
                 throw new MoodAnalysisException(MoodAnalysisException.ExceptionType.ENTERED_NULL,"Please Enter Valid Message");
 
         }
