@@ -132,20 +132,44 @@ public class MoodAnalyzTest {
     }
 
     @Test
+    public void whenGivenConstuctorImproper_ShouldThrowException() {
+        Constructor<?> constructor= null;
+        try {
+            constructor = Class.forName("MoodAnalyser").getConstructor();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        } catch (NoSuchMethodException e) {
+            try{
+                throw new MoodAnalysisException(MoodAnalysisException.ExceptionType.NO_SUCH_METHOD,"Please Enter Valid Constuctor");
+            }
+            catch (MoodAnalysisException ex)
+            {
+                ex.printStackTrace();
+            }
+        }
+
+    }
+
+    @Test
     public void givenClassNameImproper_ShouldThrowException() {
         Constructor<?> constructor= null;
         try {
             constructor = Class.forName("MoodAnalyserr").getConstructor(String.class);
         } catch (NoSuchMethodException e) {
-            throw new MoodAnalysisException(MoodAnalysisException.ExceptionType.NO_SUCH_CLASS,"Please Enter Valid Message");
+            throw new MoodAnalysisException(MoodAnalysisException.ExceptionType.NO_SUCH_CLASS,"Please Enter Valid ClassName");
         } catch (ClassNotFoundException e) {
             try{
-            throw new MoodAnalysisException(MoodAnalysisException.ExceptionType.NO_SUCH_CLASS,"Please Enter Valid Message");
+            throw new MoodAnalysisException(MoodAnalysisException.ExceptionType.NO_SUCH_CLASS,"Please Enter Valid ClassName");
              }
             catch (MoodAnalysisException ex)
             {
                 ex.printStackTrace();
             }
         }
+
+
+
+
     }
+
 }
