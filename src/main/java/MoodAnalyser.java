@@ -2,13 +2,17 @@ import java.util.Objects;
 
 public class MoodAnalyser {
     String message;
+
+    public MoodAnalyser()
+   {
+   }
     public MoodAnalyser(String message)
     {
         this.message=message;
     }
     public String anlyse() throws MoodAnalysisException {
         try {
-            if(message.length()== 0)
+            if(message.length()==0)
                 throw new MoodAnalysisException(MoodAnalysisException.ExceptionType.ENTERED_EMPTY,"Please Enter Valid Message");
 
             if(message.contains("sad"))

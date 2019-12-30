@@ -23,4 +23,54 @@ public class MoodAnalyzerFactory {
             }
         return null;
     }
+
+    public static Constructor getConstructor(Class<?>... parameter) {
+        Class<?> moodAnalyserClass = null;
+        try {
+            moodAnalyserClass = Class.forName("MoodAnalyser");
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+        try {
+            Constructor<?> moodConstructor = moodAnalyserClass.getConstructor(parameter);
+            return moodConstructor;
+        } catch (NoSuchMethodException e) {
+            e.printStackTrace();
+        }
+        return null;
+
     }
+
+    public static Object getObject(Constructor constructor,String... parameter) {
+
+
+        Object moodobj = null;
+        try {
+            moodobj = constructor.newInstance(parameter);
+        } catch (InstantiationException e) {
+            e.printStackTrace();
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
+        } catch (InvocationTargetException e) {
+            e.printStackTrace();
+        }
+        return (MoodAnalyser)moodobj;
+
+    }
+
+    public static Object getObjectWithNoParameter(Constructor constructor) {
+        Object moodobj = null;
+        try {
+            moodobj = constructor.newInstance();
+        } catch (InstantiationException e) {
+            e.printStackTrace();
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
+        } catch (InvocationTargetException e) {
+            e.printStackTrace();
+        }
+        return (MoodAnalyser)moodobj;
+
+    }
+
+}

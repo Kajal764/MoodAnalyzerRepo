@@ -1,7 +1,6 @@
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
-
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 
@@ -61,7 +60,6 @@ public class MoodAnalyzTest {
     public void whenGivenSpaceShouldThrowException() {
         String message="";
         MoodAnalyser analyze = new MoodAnalyser(message);
-
         try {
             //ExpectedException er=ExpectedException.none();
             //er.expect(MoodAnalysisException.class);
@@ -151,6 +149,25 @@ public class MoodAnalyzTest {
     }
 
     @Test
+    public void whenGivenConstructorWithParameter_ShouldReturnObject() {
+        Constructor constructor=MoodAnalyzerFactory.getConstructor(String.class);
+        Object object=MoodAnalyzerFactory.getObject(constructor,"I AM HAPPY");
+       // Object oo=MoodAnalyzerFactory.getObjectDefaultConstructor(constructor);
+
+        MoodAnalyser moodAnalyser=(MoodAnalyser)object;
+        Assert.assertEquals(true,moodAnalyser.equals(new MoodAnalyser("I AM HAPPY")));
+
+    }
+
+    @Test
+    public void whenGivenConstructorWithNoParameter_ShouldReturnObject() {
+        Constructor constructor=MoodAnalyzerFactory.getConstructor();
+        Object object=MoodAnalyzerFactory.getObject(constructor);
+        MoodAnalyser moodAnalyser=(MoodAnalyser)object;
+        Assert.assertEquals(true,moodAnalyser.equals(new MoodAnalyser()));
+    }
+
+    @Test
     public void givenClassNameImproper_ShouldThrowException() {
         Constructor<?> constructor= null;
         try {
@@ -166,6 +183,7 @@ public class MoodAnalyzTest {
                 ex.printStackTrace();
             }
         }
+
 
 
 
