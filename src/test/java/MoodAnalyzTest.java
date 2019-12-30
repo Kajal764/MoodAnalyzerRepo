@@ -194,6 +194,20 @@ public class MoodAnalyzTest {
     }
 
 
+    @Test
+    public void whenGivenImproperField_ShouldThrowException() {
+        Class<?>constructor = null;
+        try {
+            constructor = Class.forName("MoodAnalyser");
+            Field field=constructor.getField("message1234");
+            Assert.assertEquals("message",field);
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        } catch (NoSuchFieldException e) {
+            e.getMessage();
+        }
+
+    }
 
 
     @Test
