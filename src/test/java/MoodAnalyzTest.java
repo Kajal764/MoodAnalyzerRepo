@@ -211,6 +211,24 @@ public class MoodAnalyzTest {
 
 
     @Test
+    public void whenGivenMsgNull_ShouldThrowException() throws InvocationTargetException, IllegalAccessException {
+        try{
+        Method method = new MoodAnalyzerFactory().getMethod("analyseMood");
+        String mood = (String) method.invoke(new MoodAnalyser(),null);
+        Assert.assertEquals("Happy", mood);
+
+      }catch (IllegalArgumentException e){
+            try {
+                throw new MoodAnalysisException(MoodAnalysisException.ExceptionType.ENTERED_NULL,"Please Enter Valid ClassName");
+            }catch (MoodAnalysisException a)
+            {
+                a.printStackTrace();
+            }
+
+        }
+
+    }
+        @Test
     public void givenClassNameImproper_ShouldThrowException() {
         Constructor<?> constructor= null;
         try {
