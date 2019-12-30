@@ -3,6 +3,7 @@ import org.junit.Test;
 import org.junit.rules.ExpectedException;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 
 public class MoodAnalyzTest {
 
@@ -156,7 +157,6 @@ public class MoodAnalyzTest {
 
         MoodAnalyser moodAnalyser=(MoodAnalyser)object;
         Assert.assertEquals(true,moodAnalyser.equals(new MoodAnalyser("I AM HAPPY")));
-
     }
 
     @Test
@@ -168,11 +168,42 @@ public class MoodAnalyzTest {
     }
 
     @Test
+    public void whenMethodInvoke_ShouldReturnCorrect () throws ClassNotFoundException {
+        //Constructor constructor=MoodAnalyzerFactory.getConstructor(String.class);
+
+        Method method=new MoodAnalyzerFactory().getMethod("analyseMood");
+        try {
+            String mood=(String)method.invoke(new MoodAnalyser(),"I Am Happy");
+            Assert.assertEquals("Happy",mood);
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
+        } catch (InvocationTargetException e) {
+            e.printStackTrace();
+        }
+
+        /*try {
+            Constructor constructor=MoodAnalyzerFactory.getConstructor(String.class);
+            Object obj=MoodAnalyzerFactory.getObject(constructor,"I Am Happy");
+            Method method=MoodAnalyser.class.getDeclaredMethod("analyseMood");
+            Object object=method.invoke(obj);
+            Assert.assertEquals("Happy",object.toString());
+        } catch (NoSuchMethodException ex) {
+            ex.printStackTrace();
+        } catch (IllegalAccessException ex) {
+            ex.printStackTrace();
+        } catch (InvocationTargetException ex) {
+            ex.printStackTrace();
+        }*/
+
+    }
+
+    @Test
     public void givenClassNameImproper_ShouldThrowException() {
         Constructor<?> constructor= null;
         try {
             constructor = Class.forName("MoodAnalyserr").getConstructor(String.class);
-        } catch (NoSuchMethodException e) {
+        }
+        catch (NoSuchMethodException e) {
             throw new MoodAnalysisException(MoodAnalysisException.ExceptionType.NO_SUCH_CLASS,"Please Enter Valid ClassName");
         } catch (ClassNotFoundException e) {
             try{
@@ -183,8 +214,9 @@ public class MoodAnalyzTest {
                 ex.printStackTrace();
             }
         }
+        
 
-
+        
 
 
 

@@ -1,5 +1,6 @@
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 
 public class MoodAnalyzerFactory {
     public static MoodAnalyser createMoodAnalyzer(String message) {
@@ -8,7 +9,7 @@ public class MoodAnalyzerFactory {
             Constructor<?> moodConstructor = moodAnalyserClass.getConstructor(String.class);
             try {
                 Object moodobj = moodConstructor.newInstance(message);
-                return (MoodAnalyser)moodobj;
+                return (MoodAnalyser) moodobj;
             } catch (IllegalAccessException e) {
                 e.printStackTrace();
             } catch (InstantiationException e) {
@@ -16,11 +17,11 @@ public class MoodAnalyzerFactory {
             } catch (InvocationTargetException e) {
                 e.printStackTrace();
             }
-            } catch (ClassNotFoundException e) {
+        } catch (ClassNotFoundException e) {
             e.printStackTrace();
-            } catch (NoSuchMethodException e) {
+        } catch (NoSuchMethodException e) {
             e.printStackTrace();
-            }
+        }
         return null;
     }
 
@@ -41,7 +42,7 @@ public class MoodAnalyzerFactory {
 
     }
 
-    public static Object getObject(Constructor constructor,String... parameter) {
+    public static Object getObject(Constructor constructor, String... parameter) {
 
 
         Object moodobj = null;
@@ -54,7 +55,7 @@ public class MoodAnalyzerFactory {
         } catch (InvocationTargetException e) {
             e.printStackTrace();
         }
-        return (MoodAnalyser)moodobj;
+        return (MoodAnalyser) moodobj;
 
     }
 
@@ -69,8 +70,20 @@ public class MoodAnalyzerFactory {
         } catch (InvocationTargetException e) {
             e.printStackTrace();
         }
-        return (MoodAnalyser)moodobj;
+        return (MoodAnalyser) moodobj;
 
+    }
+
+    public Method getMethod(String methodName) {
+        Constructor constructor = getConstructor();
+        Object object = getObject(constructor);
+        try {
+            Method method = object.getClass().getDeclaredMethod(methodName, String.class);
+            return method;
+        } catch (NoSuchMethodException e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 
 }
