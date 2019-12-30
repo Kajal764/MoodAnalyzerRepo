@@ -2,6 +2,7 @@ import org.junit.Assert;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
 import java.lang.reflect.Constructor;
+import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
@@ -153,8 +154,6 @@ public class MoodAnalyzTest {
     public void whenGivenConstructorWithParameter_ShouldReturnObject() {
         Constructor constructor=MoodAnalyzerFactory.getConstructor(String.class);
         Object object=MoodAnalyzerFactory.getObject(constructor,"I AM HAPPY");
-       // Object oo=MoodAnalyzerFactory.getObjectDefaultConstructor(constructor);
-
         MoodAnalyser moodAnalyser=(MoodAnalyser)object;
         Assert.assertEquals(true,moodAnalyser.equals(new MoodAnalyser("I AM HAPPY")));
     }
@@ -181,21 +180,21 @@ public class MoodAnalyzTest {
             e.printStackTrace();
         }
 
-        /*try {
-            Constructor constructor=MoodAnalyzerFactory.getConstructor(String.class);
-            Object obj=MoodAnalyzerFactory.getObject(constructor,"I Am Happy");
-            Method method=MoodAnalyser.class.getDeclaredMethod("analyseMood");
-            Object object=method.invoke(obj);
-            Assert.assertEquals("Happy",object.toString());
-        } catch (NoSuchMethodException ex) {
-            ex.printStackTrace();
-        } catch (IllegalAccessException ex) {
-            ex.printStackTrace();
-        } catch (InvocationTargetException ex) {
-            ex.printStackTrace();
-        }*/
-
     }
+
+    @Test
+    public void givenMethodNameImproper_ShouldThrowException() {
+        try {
+            Method method = new MoodAnalyzerFactory().getMethod("analyseMood");
+        }
+        catch(Exception e)
+        {
+            throw new MoodAnalysisException(MoodAnalysisException.ExceptionType.NO_SUCH_METHOD,"Please Enter Valid ClassName");
+        }
+    }
+
+
+
 
     @Test
     public void givenClassNameImproper_ShouldThrowException() {
@@ -215,7 +214,7 @@ public class MoodAnalyzTest {
             }
         }
         
-
+    
         
 
 
